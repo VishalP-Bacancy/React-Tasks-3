@@ -1,0 +1,51 @@
+/* DeleteUser.css */
+
+.delete-user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .delete-user-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .delete-user-message {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .deleteButton {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .deleteButton:hover {
+    background-color: #b62d28;
+  }
+  
+
+  .cancelDelete {
+    background-color: #3aa041;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .cancelDelete:hover {
+    background-color: #1d7723;
+  }
