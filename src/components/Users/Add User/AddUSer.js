@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './AddUser.css'; // Import the associated CSS file
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AddUser = ({ addUser}) => {
   const [userName, setUserName] = useState('');
@@ -35,7 +35,15 @@ const AddUser = ({ addUser}) => {
           <label htmlFor="age">Age</label>
           <input type="number" id="age" value={userAge} onChange={handleAgeChange} />
         </div>
-        <button type="submit">Add User</button>
+        <button type="submit" className='submit-form'>Add User</button>
+        <button className='backButton'>
+        <Link
+          to={'/users'}
+          style={{ textDecoration: 'none', color: 'white'}}
+          > 
+            Back
+          </Link>  
+        </button>
       </form>
     </div>
   );

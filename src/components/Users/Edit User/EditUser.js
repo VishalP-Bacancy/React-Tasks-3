@@ -18,18 +18,7 @@ const EditUser = ({ user, editUser, users }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-    // const updatedUsers = users.map((user) => {
-    //   if (user.id === id) {
-    //     return {
-    //       ...user,
-    //       username: userName,
-    //       age: userAge
-    //     };
-    //   }
-    //   return user;
-    // });
-
+   
     const updatedUsers = users.map(user => {
       if (user.id === +id) {
         return {
@@ -57,7 +46,7 @@ const EditUser = ({ user, editUser, users }) => {
           <label htmlFor="age">Age</label>
           <input type="number" id="age" value={userAge} onChange={handleAgeChange} />
         </div>
-        <button type="submit" className='submit-form'>Add User</button>
+        <button type="submit" className='submit-form'>Update</button>
         <button className='backButton'>
         <Link
           to={'/users'}
