@@ -8,18 +8,18 @@ const DeleteUser = ({ deleteUser }) => {
 
   const handleDelete = () => {
     deleteUser(id);
-    navigate('/users');
+    navigate('/user');
   };
 
   return (
     <div className="delete-user-container">
       <h2 className="delete-user-title">Confirm Delete User</h2>
       <p className="delete-user-message">Are you sure you want to delete this user?</p>
-      <div style={{gap: '10px'}}>
+      <div>
          <button className="deleteButton" onClick={handleDelete}>
            Delete
          </button>
-         <button className='cancelDelete' onClick={() => navigate('/users')}>
+         <button className='cancelDelete' onClick={() => navigate('/user')}>
           Cancel
          </button>
       </div>    

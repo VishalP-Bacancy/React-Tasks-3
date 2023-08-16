@@ -20,7 +20,7 @@ const AddUser = ({ addUser}) => {
     event.preventDefault();
     console.log(userName, typeof(userName), userAge, typeof(+userAge))
     addUser(userName, parseInt(userAge))
-    navigate('/users')
+    navigate('/user')
   };
 
   return (
@@ -38,7 +38,7 @@ const AddUser = ({ addUser}) => {
         <button type="submit" className='submit-form'>Add User</button>
         <button className='backButton'>
         <Link
-          to={'/users'}
+          to={'/user'}
           style={{ textDecoration: 'none', color: 'white'}}
           > 
             Back

@@ -31,7 +31,7 @@ const EditUser = ({ user, editUser, users }) => {
     });
 
     editUser(updatedUsers)
-    navigate('/users')
+    navigate('/user')
   };
 
   return (
@@ -49,7 +49,7 @@ const EditUser = ({ user, editUser, users }) => {
         <button type="submit" className='submit-form'>Update</button>
         <button className='backButton'>
         <Link
-          to={'/users'}
+          to={'/user'}
           style={{ textDecoration: 'none', color: 'white'}}
           > 
             Back

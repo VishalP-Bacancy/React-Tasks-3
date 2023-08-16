@@ -6,7 +6,7 @@ const UserDetail = ({ user }) => {
   const navigate = useNavigate()
   console.log('UserDetails:-  ', user)
   const handleBackButton = () => {
-    navigate('/users')
+    navigate('/user')
   }
   return (
     <div>

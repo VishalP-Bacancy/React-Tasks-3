@@ -1,6 +1,6 @@
 import React from 'react';
-import './UsersList.css';
 import { Link } from 'react-router-dom';
+import './UsersList.css';
 
 const UsersList = ({ users, selectUserId }) => {
 

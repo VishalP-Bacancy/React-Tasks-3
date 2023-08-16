@@ -16,7 +16,6 @@ function App() {
 
   const addUser = (userName, age) => {
     setUsers([...users, {username: userName, age: age, id: users.length + 1}])    
-    console.log('In App.js: ---- ', users)
   }
 
   const selectUserId = (user) => {
@@ -24,14 +23,11 @@ function App() {
   }
 
   const deleteUser = (userId) => {
-    console.log('userID:-  ', userId)
     setUsers(prevUsers => prevUsers.filter(user => user.id !== +userId))
-    console.log('users in app.js:--', users)
   }
 
   const editUser = (editedUsers) => {
     setUsers(editedUsers)
-    console.log('edited users in app.js:- ', editedUsers)
   }
   
   return (
@@ -40,7 +36,7 @@ function App() {
       <Header />
        <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/users' element={<UsersList users={users} selectUserId = {selectUserId}/>} />
+          <Route path='/user' element={<UsersList users={users} selectUserId = {selectUserId}/>} />
           <Route path='/user/:id' element={<UserDetail user = {selectedUser}/>} />
           <Route path='/user/edit/:id' element={<EditUser user = {selectedUser} editUser = {editUser} users = {users}/>}/>
           <Route path='/user/add' element={<AddUser addUser={addUser} />} />
