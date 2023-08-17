@@ -14,8 +14,8 @@ const UserDetail = ({ user }) => {
         <h1 className='userDetail-title'>User Details:</h1>
         <br />
       <div style={{display: 'flex', justifyContent: 'center',gap: '20px', flexDirection: 'column'}}>
-          <h5>{user.username}</h5>
-          <h6>{user.age}</h6>
+          <h5>Username:    {user.username}</h5>
+          <h6>Age:    {user.age}</h6>
       </div>
     </div>
      <br />
