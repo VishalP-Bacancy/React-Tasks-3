@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './UsersList.css';
 
-const UsersList = ({ users, selectUserId }) => {
+const UsersList = ({ users, selectUserId, search }) => {
 
 
   const handleViewDetail = (user) => {
@@ -26,7 +26,9 @@ const UsersList = ({ users, selectUserId }) => {
       </button>
       <div>
         <ul>
-          {users.map((user) => {
+          {users && users?.reverse().filter((filteredUser) => 
+            filteredUser.username.toLowerCase().includes(search.toLowerCase())
+          ).map((user) => {
             return (
               <div key={user.id} className='userListItem'>
                 <li>

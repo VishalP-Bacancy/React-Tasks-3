@@ -13,6 +13,7 @@ function App() {
 
   const [users, setUsers] = useState([])
   const [selectedUser, setSelectedUser] = useState({})
+  const [search, setSearch] = useState('')
 
   const addUser = (userName, age) => {
     setUsers([...users, {username: userName, age: age, id: users.length + 1}])    
@@ -33,10 +34,10 @@ function App() {
   return (
     <div>
      <BrowserRouter>
-      <Header />
+      <Header setSearch={setSearch}/>
        <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/user' element={<UsersList users={users} selectUserId = {selectUserId}/>} />
+          <Route path='/user' element={<UsersList users={users} selectUserId = {selectUserId} search={search}/>} />
           <Route path='/user/:id' element={<UserDetail user = {selectedUser}/>} />
           <Route path='/user/edit/:id' element={<EditUser user = {selectedUser} editUser = {editUser} users = {users}/>}/>
           <Route path='/user/add' element={<AddUser addUser={addUser} />} />
