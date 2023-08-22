@@ -59,7 +59,7 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
           <label htmlFor="age">Age</label>
           <input type="number" id="age" value={userAge} onChange={handleAgeChange} />
         </div>
-        <button type="submit" className='submit-form'>Add User</button>
+        <button type="submit" className='add-btn'>Add User</button>
         <button className='backButton'>
         <Link
           to={'/user'}
