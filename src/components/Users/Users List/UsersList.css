@@ -16,6 +16,7 @@
   cursor: pointer;
   border-radius: 5px;
   margin-bottom: 20px;
+  margin-right: 980px;
 }
 
 .addUser a {
@@ -68,3 +69,9 @@ li {
 .button.view-detail {
   background-color: #007bff;
 }
+
+
+.add-sort-option{
+  justify-content: end;
+}
+

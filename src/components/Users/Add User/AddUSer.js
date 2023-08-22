@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AddUser.css'; // Import the associated CSS file
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-const AddUser = ({ addUser}) => {
+const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
+  const { id } = useParams()
   const [userName, setUserName] = useState('');
   const [userAge, setUserAge] = useState('');
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if(isEdit){
+      setUserName(user.username)
+      setUserAge(user.age)
+      isEdit = false
+    }
+ },[])
 
   const handleNameChange = (event) => {
     setUserName(event.target.value);
@@ -18,8 +27,23 @@ const AddUser = ({ addUser}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(userName, typeof(userName), userAge, typeof(+userAge))
-    addUser(userName, parseInt(userAge))
+    if (isEdit) {
+      const updatedUsers = users.map(user => {
+        if (user.id === +id) {
+          return {
+            ...user,
+            username: userName,
+            age: userAge
+          };
+        }
+        return user;
+      });
+      editUser(updatedUsers)
+    } else {
+      console.log(userName, typeof(userName), userAge, typeof(+userAge))
+      addUser(userName, parseInt(userAge))
+    }
+    
     navigate('/user')
   };
 

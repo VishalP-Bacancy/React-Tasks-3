@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './UsersList.css';
 
 const UsersList = ({ users, selectUserId, search }) => {
-
+ const [sortBy, setSortBy] = useState('')
 
   const handleViewDetail = (user) => {
     selectUserId(user)
@@ -13,10 +13,15 @@ const UsersList = ({ users, selectUserId, search }) => {
     selectUserId(user)
   }
 
+  const sortHandler = (e) => {
+    setSortBy(e.target.value)
+    console.log('Sort selected:- ', e.target.value)
+  }
 
   return (
     <div className='userList'>
-      <button className='addUser'>
+      <div className='add-sort-option'>
+        <button className='addUser'>
         <Link
           to={'/user/add'}
           style={{ textDecoration: 'none', color: 'white' }}
@@ -24,6 +29,12 @@ const UsersList = ({ users, selectUserId, search }) => {
           Add User
         </Link>
       </button>
+      <select name="cars" id="cars" onChange={sortHandler}>
+         <option value="">Sort By</option>
+         <option value="username">Username</option>
+         <option value="age">Age</option>
+      </select>
+      </div>
       <div>
         <ul>
           {users && users?.reverse().filter((filteredUser) => 

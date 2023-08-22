@@ -35,4 +35,26 @@ header {
   
   .searchBar{
     margin-top: 10px;
+    /* display: flex;
+    flex-direction: row; */
+  }
+
+  .searchBar-form{
+    display: flex;
+    /* justify-content: space-between; */
+  }
+
+  .searchButton{
+    margin-left: 10px;
+    /* padding: 1px ; */
+  }
+
+  .search-reset-button{
+    margin-left: 10px;
+    padding: 0 10px;
+    background-color: #61677A;
+  }
+
+  .search-reset-button:hover{
+    background-color: rgb(34, 26, 26);
   }
