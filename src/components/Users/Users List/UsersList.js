@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import './UsersList.css';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import { isEmpty } from 'lodash';
+import { Modal } from 'antd';
+import Pagination from '../../pagination/Pagination';
 
-const UsersList = ({ users, selectUserId, search }) => {
- const [sortBy, setSortBy] = useState('')
+const UsersList = ({ users, selectUserId, deleteUser, search }) => {
+  const [sortBy, setSortBy] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({})
+  const [currentPage, setCurrentPage] = useState(1)
+  const [usersPerPage, setUsersPerPage] = useState(1)
+  const { id } = useParams()
+  const navigate = useNavigate()
+
+  const filterUser = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()))
+
+
+  useEffect(() => {
+    if (!isEmpty(id)) {
+      setIsModalOpen(true);
+    }
+  }, [id]);
 
   const handleViewDetail = (user) => {
     selectUserId(user)
@@ -13,13 +32,61 @@ const UsersList = ({ users, selectUserId, search }) => {
     selectUserId(user)
   }
 
+  const handleOk = () => {
+    deleteUser(+id);
+    setIsModalOpen(false);
+    navigate("/user");
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    navigate("/user");
+  };
+
+
   const sortHandler = (e) => {
     setSortBy(e.target.value)
     console.log('Sort selected:- ', e.target.value)
   }
 
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filterUser.slice(indexOfFirstUser, indexOfLastUser)
+
+  const handlePaginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+
   return (
-    <div className='userList'>
+    <>
+      {
+        !isEmpty(id) && (
+          <Modal
+          title = "Delete User:- "
+          closeIcon=<CloseCircleOutlined style={{color: 'red'}}/>
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          >
+          <div className="delete__modal">
+            <br />
+            <br />
+            <label>
+              Userame: <strong>{selectedUser.username}</strong>
+            </label>
+            <br />
+            <label>
+              Age: <strong>{selectedUser.age}</strong>
+            </label>
+          </div>
+          <br />
+          <br />
+          <p style={{ color: "#BB2525", fontSize: '20px' }}>
+            Are you sure you want to delete record? 🙄
+          </p>
+          </Modal>
+        )
+      }
+      <div className='userList'>
       <div className='add-sort-option'>
         <button className='addUser'>
         <Link
@@ -29,17 +96,15 @@ const UsersList = ({ users, selectUserId, search }) => {
           Add User
         </Link>
       </button>
-      <select name="cars" id="cars" onChange={sortHandler}>
+      {/* <select name="cars" id="cars" onChange={sortHandler}>
          <option value="">Sort By</option>
          <option value="username">Username</option>
          <option value="age">Age</option>
-      </select>
+      </select> */}
       </div>
       <div>
         <ul>
-          {users && users?.reverse().filter((filteredUser) => 
-            filteredUser.username.toLowerCase().includes(search.toLowerCase())
-          ).map((user) => {
+          {currentUsers?.map((user) => {
             return (
               <div key={user.id} className='userListItem'>
                 <li>
@@ -68,6 +133,7 @@ const UsersList = ({ users, selectUserId, search }) => {
                       <Link
                         to={`/user/delete/${user.id}`}
                         style={{ textDecoration: 'none', color: 'white' }}
+                        onClick={() => setSelectedUser(user)}
                       >
                         Delete
                       </Link>
@@ -77,9 +143,13 @@ const UsersList = ({ users, selectUserId, search }) => {
               </div>
             );
           })}
-        </ul>
+          </ul>
       </div>
     </div>
+    <div className='pagination'>
+      {filterUser && <Pagination usersPerPage={usersPerPage} totalUsers={filterUser.length} currentPage={currentPage} paginate={handlePaginate}/> }
+    </div>
+    </>
   );
 };
 

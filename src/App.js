@@ -28,6 +28,8 @@ function App() {
   const editUser = (editedUsers) => {
     setUsers(editedUsers)
   }
+
+
   
   return (
     <div>
@@ -39,7 +41,7 @@ function App() {
           <Route path='/user/:id' element={<UserDetail user = {selectedUser}/>} />
           <Route path='/user/add' element={<AddUser addUser={addUser} />} />
           <Route path='/user/edit/:id' element={<AddUser user = {selectedUser} editUser = {editUser} users = {users} isEdit = {true}/>}/>
-          <Route path='/user/delete/:id' element={<UsersList   deleteUser={deleteUser}/>}/>
+          <Route path='/user/delete/:id' element={<UsersList deleteUser={deleteUser} users={users} search={search} />} />
           <Route path='*' element={<NotFoundError />}/>
        </Routes>
      </BrowserRouter>

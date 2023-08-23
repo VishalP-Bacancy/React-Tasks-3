@@ -75,3 +75,33 @@ li {
   justify-content: end;
 }
 
+.delete__modal {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.delete__modal label {
+  font-weight: bold;
+}
+
+.delete__modal br {
+  margin: 10px 0;
+}
+
+.delete__modal p {
+  color: red;
+  font-weight: bold;
+}
+
+
+/* .pagination{
+  display: flex;
+  justify-content: center;
+  background-color: #28a745;
+  margin-top: 100px;
+  padding: 0;
+}
+
+ */

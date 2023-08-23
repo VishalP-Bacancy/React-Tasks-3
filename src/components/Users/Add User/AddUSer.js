@@ -6,6 +6,7 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
   const { id } = useParams()
   const [userName, setUserName] = useState('');
   const [userAge, setUserAge] = useState('');
+  const [error, setError] = useState('')
 
   const navigate = useNavigate()
 
@@ -15,7 +16,7 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
       setUserAge(user.age)
       isEdit = false
     }
- },[])
+ },[isEdit])
 
   const handleNameChange = (event) => {
     setUserName(event.target.value);
@@ -27,6 +28,21 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (userName.trim().length === 0 || userAge === '') {
+      setError({
+          title: "Invalid Input",
+          message: `Please enter a valid username and age.`
+      })
+      return;
+  }
+  if (+userAge < 1) {
+      setError({
+          title: "Invalid Age",
+          message: `Enter a valid age! (> 0)`
+      })
+      return;
+    }
+    
     if (isEdit) {
       const updatedUsers = users.map(user => {
         if (user.id === +id) {
@@ -46,9 +62,11 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
     
     navigate('/user')
   };
+ 
 
   return (
-    <div className="add-user">
+    <>
+      <div className="add-user">
       <h2>Add User</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-control">
@@ -59,7 +77,7 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
           <label htmlFor="age">Age</label>
           <input type="number" id="age" value={userAge} onChange={handleAgeChange} />
         </div>
-        <button type="submit" className='add-btn'>Add User</button>
+        <button type="submit" className='add-btn'>{isEdit? 'Update': 'Add User'}</button>
         <button className='backButton'>
         <Link
           to={'/user'}
@@ -69,7 +87,8 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
           </Link>  
         </button>
       </form>
-    </div>
+      </div>
+    </>
   );
 };
 
