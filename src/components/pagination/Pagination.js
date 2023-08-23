@@ -19,7 +19,6 @@ const Pagination = ({ usersPerPage, totalUsers, currentPage, paginate }) => {
             </button>
           </li>
         )}
-        {/* Display page numbers */}
         {pageNumbers.map((pageNumber) => (
           <li key={pageNumber} className={pageNumber === currentPage ? 'page-item active' : 'page-item'}>
             <button onClick={() => paginate(pageNumber)} className='page-link'>

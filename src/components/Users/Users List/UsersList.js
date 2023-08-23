@@ -7,13 +7,14 @@ import { Modal } from 'antd';
 import Pagination from '../../pagination/Pagination';
 
 const UsersList = ({ users, selectUserId, deleteUser, search }) => {
-  const [sortBy, setSortBy] = useState('')
+  // const [sortBy, setSortBy] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState({})
   const [currentPage, setCurrentPage] = useState(1)
-  const [usersPerPage, setUsersPerPage] = useState(1)
+  const [usersPerPage] = useState(2)
   const { id } = useParams()
   const navigate = useNavigate()
+
 
   const filterUser = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()))
 
@@ -43,10 +44,10 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
   };
 
 
-  const sortHandler = (e) => {
-    setSortBy(e.target.value)
-    console.log('Sort selected:- ', e.target.value)
-  }
+  // const sortHandler = (e) => {
+  //   setSortBy(e.target.value)
+  //   console.log('Sort selected:- ', e.target.value)
+  // }
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;

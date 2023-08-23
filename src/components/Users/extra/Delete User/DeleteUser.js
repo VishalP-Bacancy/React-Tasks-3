@@ -9,7 +9,7 @@ const DeleteUser = ({ deleteUser }) => {
   const handleDelete = () => {
     deleteUser(id);
     navigate('/user');
-  };
+  }; 
 
   return (
     <div className="delete-user-container">

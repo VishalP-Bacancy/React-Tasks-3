@@ -2,6 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './AddUser.css'; // Import the associated CSS file
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
+
+const ErrorModal = ({ error, setError }) => {
+  return (
+     <div className='error-modal'>
+      <h2>{error?.title}</h2><br />{error?.message}<button className='error-button' onClick={()=>setError(null)}>Close</button>
+     </div>
+   )
+}
+
+
+
 const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
   const { id } = useParams()
   const [userName, setUserName] = useState('');
@@ -31,14 +42,14 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
     if (userName.trim().length === 0 || userAge === '') {
       setError({
           title: "Invalid Input",
-          message: `Please enter a valid username and age.`
+          message: `Please enter a valid Username and Age⚠`
       })
       return;
   }
   if (+userAge < 1) {
       setError({
           title: "Invalid Age",
-          message: `Enter a valid age! (> 0)`
+          message: `Enter a valid age! (> 0) 😒`
       })
       return;
     }
@@ -62,10 +73,13 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
     
     navigate('/user')
   };
- 
+
+
+  
 
   return (
     <>
+      {error && (<ErrorModal error={error} setError={setError}/>)}
       <div className="add-user">
       <h2>Add User</h2>
       <form onSubmit={handleSubmit}>
@@ -82,6 +96,7 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
         <Link
           to={'/user'}
           style={{ textDecoration: 'none', color: 'white'}}
+          onClick={() => setError(null)}
           > 
             Back
           </Link>  
