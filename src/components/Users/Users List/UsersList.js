@@ -9,17 +9,19 @@ import Pagination from '../../pagination/Pagination';
 const UsersList = ({ users, selectUserId, deleteUser, search }) => {
   const [sortBy, setSortBy] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState({})
   const [currentPage, setCurrentPage] = useState(1)
   const [usersPerPage] = useState(2)
-  // const [filterUser, setFilterUser] = useState([])
+  
   const { id } = useParams()
-  // const [searchParams, setSearchParams] = useSearchParams()
+
+  const [searchParams] = useSearchParams()
+  const pageParam = searchParams.get('page');
+
   const navigate = useNavigate()
 
 
   let filterUser = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()))
-
+  const selectedUser = users.filter(user => user.id === +id)
   // const [sortUsers, setSortUser] = useState(filterUser)
 
   useEffect(() => {
@@ -49,36 +51,30 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
 
   //pagination
 
-  // const pageNo = searchParams.get('page')
-  // const noOfPages = Math.ceil(Number(filterUser.length/+usersPerPage));
-  // useEffect(()=>{
-  //   if(pageNo){
-  //     setCurrentPage(pageNo)
-  //     // console.log("sdfghjkl"+noOfPages +"dfghjkl"+pageNo)
-  //     if(+pageNo > noOfPages){
-  //       setSearchParams({page:1})
-  //     }      
-  //   }
-  // }, [pageNo, search])
-  
-
-  // const selectPageHandler = (selectedPage) => {
-  //   if (
-  //     selectedPage >= 1 &&
-  //     selectedPage <= noOfPages &&
-  //     selectedPage !== currentPage
-  //   )
-  //   setCurrentPage(selectedPage);
-  //   setSearchParams({page:selectedPage})
-  // };
-
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = sortUsers().slice(indexOfFirstUser, indexOfLastUser)
 
+  useEffect(() => {
+    if (!pageParam) {
+      navigate('/user?page=1', { replace: true });
+      return;
+    }
+    if (!isNaN(pageParam)) {
+      setCurrentPage(parseInt(pageParam));
+    } else {
+      setCurrentPage(1);
+    }
+  }, [pageParam]);
+  
+
+
+
   const handlePaginate = (pageNumber) => {
-    setCurrentPage(pageNumber)
-  }
+    setCurrentPage(pageNumber);
+    navigate(`/user?page=${pageNumber}`, { replace: true });
+  };
+  
 
   return (
     <>
@@ -95,11 +91,11 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
             <br />
             <br />
             <label>
-              Userame: <strong>{selectedUser.username}</strong>
+              Userame: <strong>{selectedUser[0].username}</strong>
             </label>
             <br />
             <label>
-              Age: <strong>{selectedUser.age}</strong>
+              Age: <strong>{selectedUser[0].age}</strong>
             </label>
           </div>
           <br />
@@ -155,7 +151,6 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
                       <Link
                         to={`/user/delete/${user.id}`}
                         style={{ textDecoration: 'none', color: 'white' }}
-                        onClick={() => setSelectedUser(user)}
                       >
                         Delete
                       </Link>
@@ -169,7 +164,14 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
       </div>
     </div>
     <div className='pagination'>
-      {filterUser && <Pagination usersPerPage={usersPerPage} totalUsers={filterUser.length} currentPage={currentPage} paginate={handlePaginate}/> }
+        {filterUser &&
+          <Pagination
+            usersPerPage={usersPerPage}
+            totalUsers={filterUser.length}
+            currentPage={currentPage}
+            paginate={handlePaginate} 
+            pageParam = {pageParam}
+            />}
     </div>
     </>
   );

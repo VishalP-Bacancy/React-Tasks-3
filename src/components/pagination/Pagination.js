@@ -2,39 +2,64 @@
 
 import React from 'react';
 import './Pagination.css';
+import { Link } from 'react-router-dom';
+import NotFoundError from '../Not Found Error/NotFoundError';
 
-const Pagination = ({ usersPerPage, totalUsers, currentPage, paginate }) => {
+const Pagination = ({ usersPerPage, totalUsers, currentPage, paginate, pageParam }) => {
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
     pageNumbers.push(i);
   }
 
+  const isPageAvailable = pageNumbers.includes(+pageParam)
+
   return (
-    <nav>
-      <ul className='pagination'>
-        {currentPage > 1 && (
-          <li className='page-item'>
-            <button onClick={() => paginate(currentPage - 1)} className='page-link'>
-              Previous
-            </button>
-          </li>
-        )}
-        {pageNumbers.map((pageNumber) => (
-          <li key={pageNumber} className={pageNumber === currentPage ? 'page-item active' : 'page-item'}>
-            <button onClick={() => paginate(pageNumber)} className='page-link'>
-              {pageNumber}
-            </button>
-          </li>
-        ))}
-        {currentPage < pageNumbers.length && (
-          <li className='page-item'>
-            <button onClick={() => paginate(currentPage + 1)} className='page-link'>
-              Next
-            </button>
-          </li>
+    <div>
+      {!isPageAvailable && <NotFoundError errorMessage={'The page number you entered is not available!'}/>}
+      {isPageAvailable && 
+        <nav>
+     
+     <ul className='pagination'>
+       {currentPage > 1 && (
+         <li className='page-item'>
+           <button className='page-link'>
+             <Link
+               to={`/user?page=${currentPage - 1}`}
+               onClick={() => paginate(currentPage - 1)} 
+             >
+                  Previous
+             </Link>
+           </button>
+         </li>
+       )}
+       {pageNumbers.map((pageNumber) => (
+         <li key={pageNumber} className={pageNumber === currentPage ? 'page-item active' : 'page-item'}>
+           <button className='page-link'>
+             <Link
+               to={`/user?page=${pageNumber}`}
+               onClick={() => paginate(pageNumber)} 
+             >
+               {pageNumber}
+             </Link>
+           </button>
+         </li>
+       ))}
+       {currentPage < pageNumbers.length && (
+         <li className='page-item'>
+           <button className='page-link'>
+             <Link
+               to={`/user?page=${currentPage + 1}`}
+               onClick={() => paginate(currentPage + 1)} 
+             >
+               Next
+             </Link>
+           </button>
+         </li>
         )}
       </ul>
-    </nav>
+     </nav>
+    }
+   </div>
   );
 };
 

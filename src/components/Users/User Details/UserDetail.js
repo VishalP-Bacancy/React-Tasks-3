@@ -17,7 +17,7 @@ const UserDetail = ({ users }) => {
 
   return (
     <div>
-      {!isUserAvailable && <NotFoundError />}
+      {!isUserAvailable && <NotFoundError errorMessage={'User with this id not Found!'}/>}
       {isUserAvailable && (
         <div>
           <div className='userDetail'>

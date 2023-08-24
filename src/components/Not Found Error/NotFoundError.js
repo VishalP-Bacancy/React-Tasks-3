@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './NotFoundError.css'; // Make sure to create this CSS file
 
-const NotFoundError = () => {
+const NotFoundError = ({errorMessage}) => {
+  const [isErrorMessage, setIsErrorMessage] = useState(false)
+  
+  useEffect(() => {
+    if (errorMessage) {
+      setIsErrorMessage(true)
+    }
+  }, [isErrorMessage])
+
   return (
     <div className="not-found-container">
       <h1 className='not-found-title'>404 Error</h1>
-      <p className='not-found-content'>Oops! You entered a wrong URL!.</p>
+      {!isErrorMessage && <p className='not-found-content'>Oops! You entered a wrong URL!.</p>}
+      {isErrorMessage && <p className='not-found-content'>{errorMessage}</p>}
     </div>
   );
 };
