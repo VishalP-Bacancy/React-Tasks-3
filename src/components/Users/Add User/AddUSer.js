@@ -21,11 +21,11 @@ const AddUser = ({ addUser, editUser, users, isEdit }) => {
 
   const navigate = useNavigate()
 
-  const user = users.filter(user => user.id === +id)
 
 
   useEffect(() => {
     if(isEdit){
+      const user = users.filter(user => user.id === +id)
       setUserName(user[0].username)
       setUserAge(user[0].age)
       isEdit = false
