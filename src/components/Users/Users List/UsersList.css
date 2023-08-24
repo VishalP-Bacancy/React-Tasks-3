@@ -95,7 +95,11 @@ li {
   font-weight: bold;
 }
 
-
+.no-users-found{
+  text-align: center;
+  margin-top: 150px;
+  color: #f13d4c;
+}
 /* .pagination{
   display: flex;
   justify-content: center;

@@ -106,65 +106,68 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
           </Modal>
         )
       }
-      <div className='userList'>
-      <div className='add-sort-option'>
-        <button className='addUser'>
-        <Link
-          to={'/user/add'}
-          style={{ textDecoration: 'none', color: 'white' }}
-        >
-          Add User
-        </Link>
-      </button>
-      <select name="cars" id="cars" onChange={(e) => setSortBy(e.target.value)}>
-         <option value="">Sort By</option>
-         <option value="username">Username</option>
-         <option value="age">Age</option>
-      </select>
-      </div>
-      <div>
-        <ul>
-          {currentUsers?.map((user) => {
-            return (
-              <div key={user.id} className='userListItem'>
-                <li>
-                  <span className='username'>{user.username}</span>
-                  <span className='userAge'>Age: {user.age}</span>
-                  <div className='button-container'>
-                    <button className='button view-detail'>
-                      <Link
-                        to={`/user/${user.id}`}
-                        style={{ textDecoration: 'none', color: 'white' }}
-                      >
-                        View
-                      </Link>
-                    </button>
-                    <button className='button'>
-                      <Link
-                        to={`/user/edit/${user.id}`}
-                        style={{ textDecoration: 'none', color: 'white' }}
-                      >
-                        Edit
-                      </Link>
-                    </button>
-                    <button className='button delete'>
-                      <Link
-                        to={`/user/delete/${user.id}`}
-                        style={{ textDecoration: 'none', color: 'white' }}
-                      >
-                        Delete
-                      </Link>
-                    </button>
-                  </div>
-                </li>
-              </div>
-            );
-          })}
+      { filterUser.length > 0 &&
+        <div className='userList'>
+        <div className='add-sort-option'>
+          <button className='addUser'>
+            <Link
+              to={'/user/add'}
+              style={{ textDecoration: 'none', color: 'white' }}
+            >
+              Add User
+            </Link>
+          </button>
+          <select name="cars" id="cars" onChange={(e) => setSortBy(e.target.value)}>
+            <option value="">Sort By</option>
+            <option value="username">Username</option>
+            <option value="age">Age</option>
+          </select>
+        </div>
+        <div>
+          <ul>
+            {currentUsers?.map((user) => {
+              return (
+                <div key={user.id} className='userListItem'>
+                  <li>
+                    <span className='username'>{user.username}</span>
+                    <span className='userAge'>Age: {user.age}</span>
+                    <div className='button-container'>
+                      <button className='button view-detail'>
+                        <Link
+                          to={`/user/${user.id}`}
+                          style={{ textDecoration: 'none', color: 'white' }}
+                        >
+                          View
+                        </Link>
+                      </button>
+                      <button className='button'>
+                        <Link
+                          to={`/user/edit/${user.id}`}
+                          style={{ textDecoration: 'none', color: 'white' }}
+                        >
+                          Edit
+                        </Link>
+                      </button>
+                      <button className='button delete'>
+                        <Link
+                          to={`/user/delete/${user.id}`}
+                          style={{ textDecoration: 'none', color: 'white' }}
+                        >
+                          Delete
+                        </Link>
+                      </button>
+                    </div>
+                  </li>
+                </div>
+              );
+            })}
           </ul>
-      </div>
-    </div>
+        </div>
+        </div>
+      }
+      {filterUser.length <= 0 && <h1 className='no-users-found'>No users Found! ❌</h1>}
     <div className='pagination'>
-        {filterUser &&
+        {filterUser && filterUser.length > 0 &&
           <Pagination
             usersPerPage={usersPerPage}
             totalUsers={filterUser.length}
