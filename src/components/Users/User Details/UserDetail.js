@@ -1,9 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import NotFoundError from '../../Not Found Error/NotFoundError';
 import './UserDetail.css';
 
-const UserDetail = ({ user }) => {
+const UserDetail = ({ users }) => {
+  
+  const { id } = useParams()
+  const user = users.filter(user => user.id === +id)
+
   const navigate = useNavigate();
   const isUserAvailable = Object.keys(user).length > 0;
 
@@ -27,8 +31,8 @@ const UserDetail = ({ user }) => {
                 flexDirection: 'column',
               }}
             >
-              <h5>Username: {user.username}</h5>
-              <h6>Age: {user.age}</h6>
+              <h5>Username: {user[0].username}</h5>
+              <h6>Age: {user[0].age}</h6>
             </div>
           </div>
           <br />

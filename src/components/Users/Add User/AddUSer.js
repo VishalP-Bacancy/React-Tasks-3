@@ -13,7 +13,7 @@ const ErrorModal = ({ error, setError }) => {
 
 
 
-const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
+const AddUser = ({ addUser, editUser, users, isEdit }) => {
   const { id } = useParams()
   const [userName, setUserName] = useState('');
   const [userAge, setUserAge] = useState('');
@@ -21,10 +21,13 @@ const AddUser = ({ addUser, user, editUser, users, isEdit }) => {
 
   const navigate = useNavigate()
 
+  const user = users.filter(user => user.id === +id)
+
+
   useEffect(() => {
     if(isEdit){
-      setUserName(user.username)
-      setUserAge(user.age)
+      setUserName(user[0].username)
+      setUserAge(user[0].age)
       isEdit = false
     }
  },[isEdit])

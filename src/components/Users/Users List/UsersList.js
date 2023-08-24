@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import './UsersList.css';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { isEmpty } from 'lodash';
@@ -7,31 +7,26 @@ import { Modal } from 'antd';
 import Pagination from '../../pagination/Pagination';
 
 const UsersList = ({ users, selectUserId, deleteUser, search }) => {
-  // const [sortBy, setSortBy] = useState('')
+  const [sortBy, setSortBy] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState({})
   const [currentPage, setCurrentPage] = useState(1)
   const [usersPerPage] = useState(2)
+  // const [filterUser, setFilterUser] = useState([])
   const { id } = useParams()
+  // const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
 
 
-  const filterUser = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()))
+  let filterUser = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()))
 
+  // const [sortUsers, setSortUser] = useState(filterUser)
 
   useEffect(() => {
     if (!isEmpty(id)) {
       setIsModalOpen(true);
     }
   }, [id]);
-
-  const handleViewDetail = (user) => {
-    selectUserId(user)
-  };
-
-  const handleEditUser = (user) => {
-    selectUserId(user)
-  }
 
   const handleOk = () => {
     deleteUser(+id);
@@ -44,14 +39,42 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
   };
 
 
-  // const sortHandler = (e) => {
-  //   setSortBy(e.target.value)
-  //   console.log('Sort selected:- ', e.target.value)
-  // }
+  const sortUsers = () => {
+    if (sortBy === 'username') {
+      return [...filterUser].sort((a, b) => a.username.localeCompare(b.username));
+    } else {
+      return [...filterUser].sort((a, b) => a.age - b.age);
+    }
+  };
+
+  //pagination
+
+  // const pageNo = searchParams.get('page')
+  // const noOfPages = Math.ceil(Number(filterUser.length/+usersPerPage));
+  // useEffect(()=>{
+  //   if(pageNo){
+  //     setCurrentPage(pageNo)
+  //     // console.log("sdfghjkl"+noOfPages +"dfghjkl"+pageNo)
+  //     if(+pageNo > noOfPages){
+  //       setSearchParams({page:1})
+  //     }      
+  //   }
+  // }, [pageNo, search])
+  
+
+  // const selectPageHandler = (selectedPage) => {
+  //   if (
+  //     selectedPage >= 1 &&
+  //     selectedPage <= noOfPages &&
+  //     selectedPage !== currentPage
+  //   )
+  //   setCurrentPage(selectedPage);
+  //   setSearchParams({page:selectedPage})
+  // };
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filterUser.slice(indexOfFirstUser, indexOfLastUser)
+  const currentUsers = sortUsers().slice(indexOfFirstUser, indexOfLastUser)
 
   const handlePaginate = (pageNumber) => {
     setCurrentPage(pageNumber)
@@ -97,11 +120,11 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
           Add User
         </Link>
       </button>
-      {/* <select name="cars" id="cars" onChange={sortHandler}>
+      <select name="cars" id="cars" onChange={(e) => setSortBy(e.target.value)}>
          <option value="">Sort By</option>
          <option value="username">Username</option>
          <option value="age">Age</option>
-      </select> */}
+      </select>
       </div>
       <div>
         <ul>
@@ -116,7 +139,6 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
                       <Link
                         to={`/user/${user.id}`}
                         style={{ textDecoration: 'none', color: 'white' }}
-                        onClick={() => handleViewDetail(user)} 
                       >
                         View
                       </Link>
@@ -125,7 +147,6 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
                       <Link
                         to={`/user/edit/${user.id}`}
                         style={{ textDecoration: 'none', color: 'white' }}
-                        onClick={() => handleEditUser(user)}
                       >
                         Edit
                       </Link>
