@@ -8,7 +8,7 @@ const NotFoundError = ({errorMessage}) => {
     if (errorMessage) {
       setIsErrorMessage(true)
     }
-  }, [isErrorMessage])
+  }, [isErrorMessage, errorMessage])
 
   return (
     <div className="not-found-container">

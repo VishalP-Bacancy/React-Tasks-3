@@ -65,7 +65,7 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
     } else {
       setCurrentPage(1);
     }
-  }, [pageParam]);
+  }, [pageParam, navigate]);
   
 
 
