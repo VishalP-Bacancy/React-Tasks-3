@@ -15,7 +15,7 @@ const Pagination = ({ usersPerPage, totalUsers, currentPage, paginate, pageParam
 
   return (
     <div>
-      {!isPageAvailable && <NotFoundError errorMessage={'The page number you entered is not available!'}/>}
+      {/* {!isPageAvailable && <NotFoundError errorMessage={'The page number you entered is not available!'}/>} */}
       {isPageAvailable && 
         <nav>
      

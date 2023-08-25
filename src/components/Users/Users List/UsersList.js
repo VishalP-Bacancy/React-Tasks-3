@@ -14,7 +14,7 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
   
   const { id } = useParams()
 
-  const [searchParams] = useSearchParams()
+  const [searchParams,setSesrchParams] = useSearchParams()
   const pageParam = searchParams.get('page');
 
   const navigate = useNavigate()
@@ -57,15 +57,16 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
 
   useEffect(() => {
     if (!pageParam) {
-      navigate('/user?page=1', { replace: true });
-      return;
+      // navigate('/user?page=1', { replace: true });
+      // return;
+      setSesrchParams({page:1})
     }
     if (!isNaN(pageParam)) {
       setCurrentPage(parseInt(pageParam));
     } else {
       setCurrentPage(1);
     }
-  }, [pageParam, navigate]);
+  }, [pageParam]);
   
 
 

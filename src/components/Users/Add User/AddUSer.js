@@ -74,7 +74,7 @@ const AddUser = ({ addUser, editUser, users, isEdit }) => {
       addUser(userName, parseInt(userAge))
     }
     
-    navigate('/user')
+    navigate(-1)
   };
 
 
@@ -98,8 +98,8 @@ const AddUser = ({ addUser, editUser, users, isEdit }) => {
         <button className='backButton'>
         <Link
           to={'/user'}
-          style={{ textDecoration: 'none', color: 'white'}}
-          onClick={() => setError(null)}
+              style={{ textDecoration: 'none', color: 'white' }}
+              onClick={() => navigate(-1)}
           > 
             Back
           </Link>  
