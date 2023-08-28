@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './NotFoundError.css'; // Make sure to create this CSS file
+import './NotFoundError.css';
 
 const NotFoundError = ({errorMessage}) => {
   const [isErrorMessage, setIsErrorMessage] = useState(false)

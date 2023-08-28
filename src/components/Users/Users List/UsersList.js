@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash';
 import { Modal } from 'antd';
 import Pagination from '../../pagination/Pagination';
 
-const UsersList = ({ users, selectUserId, deleteUser, search }) => {
+const UsersList = ({ users, deleteUser, search }) => {
   const [sortBy, setSortBy] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1)
@@ -22,7 +22,6 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
 
   let filterUser = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()))
   const selectedUser = users.filter(user => user.id === +id)
-  // const [sortUsers, setSortUser] = useState(filterUser)
 
   useEffect(() => {
     if (!isEmpty(id)) {
@@ -57,8 +56,6 @@ const UsersList = ({ users, selectUserId, deleteUser, search }) => {
 
   useEffect(() => {
     if (!pageParam) {
-      // navigate('/user?page=1', { replace: true });
-      // return;
       setSesrchParams({page:1})
     }
     if (!isNaN(pageParam)) {
