@@ -17,6 +17,11 @@ const UsersList = ({ users, deleteUser, search }) => {
   const [searchParams,setSesrchParams] = useSearchParams()
   const pageParam = searchParams.get('page');
 
+  const url = new URL(window.location.href);
+
+  // Get the search parameters from the URL
+  const queryParams = url.search
+
   const navigate = useNavigate()
 
 
@@ -32,11 +37,11 @@ const UsersList = ({ users, deleteUser, search }) => {
   const handleOk = () => {
     deleteUser(+id);
     setIsModalOpen(false);
-    navigate("/user");
+    navigate(`/user/${queryParams}`);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
-    navigate("/user");
+    navigate(`/user/${queryParams}`);
   };
 
 
@@ -148,7 +153,7 @@ const UsersList = ({ users, deleteUser, search }) => {
                       </button>
                       <button className='button delete'>
                         <Link
-                          to={`/user/delete/${user.id}`}
+                          to={`/user/delete/${user.id}${queryParams}`}
                           style={{ textDecoration: 'none', color: 'white' }}
                         >
                           Delete
